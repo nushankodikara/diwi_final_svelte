@@ -21,6 +21,12 @@
 
 	const firestore = getFirestore(fbApp);
 	const auth = getAuth(fbApp);
+
+	if ('serviceWorker' in navigator) {
+		addEventListener('load', function () {
+			navigator.serviceWorker.register('../service-worker.js');
+		});
+	}
 </script>
 
 <FirebaseApp {auth} {firestore}>

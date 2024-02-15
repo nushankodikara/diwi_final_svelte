@@ -29,7 +29,9 @@
 </script>
 
 <SignedIn let:user>
-	<div class="flex flex-col items-center justify-center gap-4 overflow-y-scroll pb-24">
+	<div
+		class="flex flex-col items-center justify-center gap-4 overflow-y-scroll pb-24 md:grid md:grid-cols-3 md:pt-16"
+	>
 		<!-- Welcome Card -->
 		<div
 			class="w-full max-w-sm rounded-lg border border-gray-200 bg-white shadow dark:border-gray-700 dark:bg-gray-800"
