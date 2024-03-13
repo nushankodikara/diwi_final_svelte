@@ -1,13 +1,24 @@
 <script lang="ts">
-	import '../app.pcss';
-	import { FirebaseApp, SignedIn, SignedOut } from 'sveltefire';
 	import { fbApp } from '$lib';
-	import { getFirestore } from 'firebase/firestore';
 	import { createUserWithEmailAndPassword, getAuth, updateProfile } from 'firebase/auth';
+	import { getFirestore } from 'firebase/firestore';
+	import { FirebaseApp, SignedIn, SignedOut } from 'sveltefire';
+	import '../app.pcss';
 
-	import { Section, Register } from 'flowbite-svelte-blocks';
-	import { Button, Alert, Label, Input } from 'flowbite-svelte';
 	import { signInWithEmailAndPassword } from 'firebase/auth';
+	import { Alert, Button, Input, Label } from 'flowbite-svelte';
+	import { Register, Section } from 'flowbite-svelte-blocks';
+
+	import { BottomNav, BottomNavItem } from 'flowbite-svelte';
+	import {
+		ArrowLeftToBracketSolid,
+		ArrowRightToBracketOutline,
+		HomeSolid,
+		LandmarkSolid,
+		UserCircleSolid,
+		UserEditSolid,
+		WalletSolid
+	} from 'flowbite-svelte-icons';
 
 	let userData = {
 		email: '',
@@ -59,30 +70,10 @@
 		}
 	};
 
-	import { BottomNav, BottomNavItem } from 'flowbite-svelte';
-	import {
-		HomeSolid,
-		WalletSolid,
-		LandmarkSolid,
-		UserEditSolid,
-		AdjustmentsVerticalOutline,
-		ArrowRightToBracketOutline,
-		UserCircleSolid,
-		ArrowLeftToBracketSolid
-	} from 'flowbite-svelte-icons';
-
 	let login = true;
-
-	// Initialize Firebase
 
 	const firestore = getFirestore(fbApp);
 	const auth = getAuth(fbApp);
-
-	if ('serviceWorker' in navigator) {
-		addEventListener('load', function () {
-			navigator.serviceWorker.register('../service-worker.js');
-		});
-	}
 
 	let userData2 = {
 		email: '',
