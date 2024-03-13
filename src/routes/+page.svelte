@@ -2,9 +2,9 @@
 	import { createAvatar } from '@dicebear/core';
 	import { identicon } from '@dicebear/collection';
 	import { SignedIn } from 'sveltefire';
-	import { Card, Button } from 'flowbite-svelte';
+	import { Card, Button, Alert } from 'flowbite-svelte';
 	import { getRandomQuote } from '../lib/quotes';
-	import { ArrowRightOutline } from 'flowbite-svelte-icons';
+	import { ArrowRightOutline, InfoCircleSolid } from 'flowbite-svelte-icons';
 
 	const avatar = createAvatar(identicon, {
 		seed: 'User',
@@ -50,6 +50,13 @@
 				</div>
 			</div>
 		</div>
+
+		<Alert>
+			<InfoCircleSolid slot="icon" class="h-4 w-4" />
+			<span class="font-medium">Attention!</span>
+			Please complete the on-boarding process for us to better understand you.
+			<a href="/on-boarding" class="font-bold underline">Click Here</a>
+		</Alert>
 
 		<div
 			class="w-full max-w-sm rounded-lg border border-gray-200 bg-white shadow dark:border-gray-700 dark:bg-gray-800"
