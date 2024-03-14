@@ -230,7 +230,8 @@
 							<Register href="/">
 								<svelte:fragment slot="top">
 									<!-- <img class="mr-2 h-8 w-8" src="/images/logo.svg" alt="logo" /> -->
-									Happy Heart
+									<img class="mr-2 h-32 w-32" src="https://i.postimg.cc/Gm7yDmVc/logo-white.png" alt="logo" />
+									<!-- Happy Heart -->
 								</svelte:fragment>
 								<div class="space-y-4 p-6 sm:p-8 md:space-y-6">
 									<form
