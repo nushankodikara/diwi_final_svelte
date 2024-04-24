@@ -11,7 +11,7 @@
 
 	import { BottomNav, BottomNavItem } from 'flowbite-svelte';
 	import {
-		ArrowLeftToBracketSolid,
+		ArrowLeftToBracketOutline,
 		ArrowRightToBracketOutline,
 		HomeSolid,
 		LandmarkSolid,
@@ -174,12 +174,12 @@
 			<SignedIn let:signOut>
 				<BottomNavItem btnName="Home" href="/">
 					<HomeSolid
-						class="mb-1 h-5 w-5 text-gray-500 group-hover:text-primary-600 dark:text-gray-400 dark:group-hover:text-primary-500"
+						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-500 dark:text-gray-400"
 					/>
 				</BottomNavItem>
 				<BottomNavItem btnName="Prescription" href="/prescribe">
 					<WalletSolid
-						class="mb-1 h-5 w-5 text-gray-500 group-hover:text-primary-600 dark:text-gray-400 dark:group-hover:text-primary-500"
+						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-500 dark:text-gray-400"
 					/>
 				</BottomNavItem>
 				<!-- <BottomNavItem btnName="Speeches" href="/speeches">
@@ -190,29 +190,29 @@
 
 				<BottomNavItem btnName="Profile" href="/profile">
 					<UserCircleSolid
-						class="mb-1 h-5 w-5 text-gray-500 group-hover:text-primary-600 dark:text-gray-400 dark:group-hover:text-primary-500"
+						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-500 dark:text-gray-400"
 					/>
 				</BottomNavItem>
 				<BottomNavItem btnName="Log Out" on:click={signOut}>
 					<ArrowRightToBracketOutline
-						class="mb-1 h-5 w-5 text-gray-500 group-hover:text-primary-600 dark:text-gray-400 dark:group-hover:text-primary-500"
+						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-500 dark:text-gray-400"
 					/>
 				</BottomNavItem>
 			</SignedIn>
 			<SignedOut>
 				<BottomNavItem btnName="Home" href="/">
 					<HomeSolid
-						class="mb-1 h-5 w-5 text-gray-500 group-hover:text-primary-600 dark:text-gray-400 dark:group-hover:text-primary-500"
+						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-500 dark:text-gray-400"
 					/>
 				</BottomNavItem>
 				<BottomNavItem btnName="Log In" href="/login">
-					<ArrowLeftToBracketSolid
-						class="mb-1 h-5 w-5 text-gray-500 group-hover:text-primary-600 dark:text-gray-400 dark:group-hover:text-primary-500"
+					<ArrowLeftToBracketOutline
+						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-500 dark:text-gray-400"
 					/>
 				</BottomNavItem>
 				<BottomNavItem btnName="Sign Up" href="/signup">
 					<UserEditSolid
-						class="mb-1 h-5 w-5 text-gray-500 group-hover:text-primary-600 dark:text-gray-400 dark:group-hover:text-primary-500"
+						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-500 dark:text-gray-400"
 					/>
 				</BottomNavItem>
 			</SignedOut>
@@ -289,7 +289,7 @@
 												on:click={() => {
 													login = false;
 												}}
-												class="font-medium text-primary-600 hover:underline dark:text-primary-500"
+												class="text-primary-600 dark:text-primary-500 font-medium hover:underline"
 												>Sign up</a
 											>
 										</p>
@@ -376,7 +376,7 @@
 												on:click={() => {
 													login = true;
 												}}
-												class="font-medium text-primary-600 hover:underline dark:text-primary-500"
+												class="text-primary-600 dark:text-primary-500 font-medium hover:underline"
 												>Log in</a
 											>
 										</p>

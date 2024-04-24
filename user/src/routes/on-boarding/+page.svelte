@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { app } from '$lib/firebase';
+	import { app, setOnboardingProcess } from '$lib/firebase';
 	import { addDoc, collection, getFirestore, serverTimestamp } from 'firebase/firestore';
 	import { Card, Button, Label, Input, Select, Toggle, Range } from 'flowbite-svelte';
 	import toast, { Toaster } from 'svelte-french-toast';
@@ -50,6 +50,8 @@
 			console.error('Error adding document: ', error);
 			toast.error('Failed to save onboarding data');
 		}
+
+		window.location.href = '/';
 	};
 </script>
 
@@ -192,6 +194,7 @@
 					</Label>
 					<Button
 						on:click={() => {
+							setOnboardingProcess(user.uid);
 							submitOnboarding(user);
 						}}
 						class="w-full">Submit</Button

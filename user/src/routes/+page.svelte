@@ -3,13 +3,14 @@
 	import { identicon } from '@dicebear/collection';
 	import { SignedIn } from 'sveltefire';
 	import { Card, Button, Alert } from 'flowbite-svelte';
-	import { getRandomQuote } from '../lib/quotes';
+	import { getRandomQuote } from '$lib/quotes';
 	import { ArrowRightOutline, InfoCircleSolid } from 'flowbite-svelte-icons';
+	import { checkOnboardingProcess } from '$lib/firebase';
 
-	const avatar = (uid:string)=>{
+	const avatar = (uid: string) => {
 		const av = createAvatar(identicon, { seed: uid, backgroundType: ['solid'] });
 		return av.toDataUriSync();
-	}
+	};
 
 	// using time of day to determine the greeting
 	const date = new Date();
@@ -24,6 +25,20 @@
 	}
 
 	const quote = getRandomQuote();
+
+	let onBoarding = false;
+
+	const checkOnboarding = async (user: any) => {
+		if (!user) {
+			return;
+		}
+
+		const onboarding = await checkOnboardingProcess(user.uid);
+		onBoarding = onboarding;
+		if (!onboarding) {
+			window.location.href = '/on-boarding';
+		}
+	};
 </script>
 
 <SignedIn let:user>
@@ -36,7 +51,11 @@
 		>
 			<div class="flex flex-col items-center pb-10 pt-10">
 				<!-- svelte-ignore a11y-img-redundant-alt -->
-				<img class="mb-3 h-24 w-24 rounded-full shadow-lg" src={avatar(user.uid)} alt="Profile image" />
+				<img
+					class="mb-3 h-24 w-24 rounded-full shadow-lg"
+					src={avatar(user.uid)}
+					alt="Profile image"
+				/>
 				<h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{user.displayName}</h5>
 				<span class="text-sm text-gray-500 dark:text-gray-400">{greeting}!</span>
 				<div class="mt-4 flex md:mt-6">
@@ -49,18 +68,21 @@
 			</div>
 		</div>
 
-		<Alert>
-			<InfoCircleSolid slot="icon" class="h-4 w-4" />
-			<span class="font-medium">Attention!</span>
-			Please complete the on-boarding process for us to better understand you.
-			<a href="/on-boarding" class="font-bold underline">Click Here</a>
-		</Alert>
+		<span class="hidden md:block"> {checkOnboarding(user)}</span>
+		{#if !onBoarding}
+			<Alert>
+				<InfoCircleSolid slot="icon" class="h-4 w-4" />
+				<span class="font-medium">Attention!</span>
+				Please complete the on-boarding process for us to better understand you.
+				<a href="/on-boarding" class="font-bold underline">Click Here</a>
+			</Alert>
+		{/if}
 
 		<div
 			class="w-full max-w-sm rounded-lg border border-gray-200 bg-white shadow dark:border-gray-700 dark:bg-gray-800"
 		>
 			<figure
-				class="flex flex-col items-center justify-center rounded-t-lg border-b border-gray-200 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800 md:rounded-t-none md:rounded-tl-lg md:border-e"
+				class="flex flex-col items-center justify-center rounded-t-lg border-b border-gray-200 bg-white p-8 text-center md:rounded-t-none md:rounded-tl-lg md:border-e dark:border-gray-700 dark:bg-gray-800"
 			>
 				<blockquote class="mx-auto mb-4 max-w-2xl text-gray-500 dark:text-gray-400">
 					<p class="my-4 font-light">"{quote.QUOTE}"</p>

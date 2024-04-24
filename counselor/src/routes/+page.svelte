@@ -84,6 +84,7 @@
         {#each duids(data) as chat}
             <div class="border w-full rounded-lg p-4 shadow-sm bg-white flex flex-col gap-4">
                 <div class="flex w-full flex-row justify-between items-center gap-4">
+				<!-- svelte-ignore a11y-img-redundant-alt -->
 				<img class="h-8 w-8 rounded-full bg-white" src={avatar(chat.chatuid)} alt="User image" />
                 <h2 class="text-xs font-semibold text-wrap">{chat.chatuid}</h2>
                 

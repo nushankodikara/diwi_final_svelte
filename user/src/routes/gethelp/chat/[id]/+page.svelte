@@ -45,7 +45,7 @@
 </script>
 
 <SignedIn let:user>
-	<Collection ref={query(collection(db, `/counselor/${data.props.id}/chats`), orderBy('createdAt', 'asc'), limit(40))} let:data let:count>
+	<Collection ref={query(collection(db, `/counselor/${data.props.id}/chats`), where('chatuid','==',user.uid), orderBy('createdAt', 'asc'), limit(40))} let:data let:count>
 		<div class="flex flex-col gap-4 overflow-y-auto pb-36 pl-2 pr-4 pt-4">
 			{#each data as post}
 				<div class={`flex w-full ${post.uid === user.uid ? 'justify-end' : 'justify-start'}`}>
