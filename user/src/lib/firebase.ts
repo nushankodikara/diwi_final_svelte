@@ -48,3 +48,52 @@ export const getSpeeches = async () => {
 	});
 	return speeches;
 };
+
+// set nearest city
+export const setNearestCity = async (UID: string, city: string) => {
+	const db = getFirestore(app);
+	const docRef = doc(db, 'city', UID);
+	await setDoc(docRef, { nearestCity: city }, { merge: true });
+};
+
+// get nearest city
+export const getNearestCity = async (UID: string) => {
+	const db = getFirestore(app);
+	const docRef = doc(db, 'city', UID);
+	const docSnap = await getDoc(docRef);
+	if (docSnap.exists()) {
+		const data = docSnap.data();
+		if (data) {
+			return data.nearestCity;
+		}
+	}
+	return 'Not Assigned';
+};
+
+// get prescriptions where accepted is true and user is patient
+export const getPrescriptions = async (UID: string) => {
+	const db = getFirestore(app);
+	const querySnapshot = await getDocs(collection(db, 'prescriptions', UID, 'written'));
+	const prescriptions: any[] = [];
+	// biome-ignore lint/complexity/noForEach: <explanation>
+	querySnapshot.forEach((doc) => {
+		const data = doc.data();
+		data.id = doc.id;
+		prescriptions.push(data);
+	});
+	return prescriptions;
+};
+
+// get pharmacy details
+export const getPharmacyDetails = async (UID: string) => {
+	const db = getFirestore(app);
+	const docRef = doc(db, 'pharmacies', UID);
+	const docSnap = await getDoc(docRef);
+	if (docSnap.exists()) {
+		const data = docSnap.data();
+		if (data) {
+			return data;
+		}
+	}
+	return {};
+};

@@ -1,102 +1,117 @@
-<script>
+<script lang="ts">
 	import { createAvatar } from '@dicebear/core';
 	import { identicon } from '@dicebear/collection';
-	import { SignedIn } from 'sveltefire';
+	import { Collection, SignedIn } from 'sveltefire';
 	import { Card, Button, Alert } from 'flowbite-svelte';
 	import { getRandomQuote } from '../lib/quotes';
 	import { ArrowRightOutline, InfoCircleSolid } from 'flowbite-svelte-icons';
+	import {
+		getFirestore,
+		doc,
+		setDoc,
+		serverTimestamp,
+		query,
+		collection,
+		orderBy,
+		limit,
+		onSnapshot
+	} from 'firebase/firestore';
+	import { getAuth } from 'firebase/auth';
+	import { onMount } from 'svelte';
+	import { acceptPrescription } from '$lib/firebase';
+	import toast, { Toaster } from 'svelte-french-toast';
 
-	const avatar = createAvatar(identicon, {
-		seed: 'User',
-		backgroundType: ['gradientLinear', 'solid']
-	});
+	export let data;
+	console.log(data);
 
-	const svg = avatar.toDataUriSync();
+	const avatar = (uid: string) => {
+		const av = createAvatar(identicon, { seed: uid, backgroundType: ['solid'] });
+		return av.toDataUriSync();
+	};
+	const db = getFirestore();
+	const auth = getAuth();
+	let intervalId: any;
 
-	// using time of day to determine the greeting
 	const date = new Date();
 	const hours = date.getHours();
-	let greeting = '';
-	if (hours < 12) {
-		greeting = 'Good Morning';
-	} else if (hours < 18) {
-		greeting = 'Good Afternoon';
-	} else {
-		greeting = 'Good Evening';
+	const greeting = hours < 12 ? 'Good Morning' : hours < 18 ? 'Good Afternoon' : 'Good Evening';
+	const quote = getRandomQuote();
+
+	async function updateAvailability() {
+		const user = auth.currentUser;
+		if (user) {
+			const counselorRef = doc(db, `counselor/${user.uid}`);
+			await setDoc(
+				counselorRef,
+				{ available: serverTimestamp(), username: user.displayName },
+				{ merge: true }
+			);
+		}
 	}
 
-	const quote = getRandomQuote();
+	onMount(() => {
+		updateAvailability();
+		intervalId = setInterval(updateAvailability, 30000);
+	});
+
+	const accept = async (prescription: string, patient: string, user: string) => {
+		await acceptPrescription(prescription, patient, user);
+		toast.success('Prescription accepted successfully');
+		window.location.href = '/';
+	};
 </script>
 
+<Toaster />
 <SignedIn let:user>
 	<div
 		class="flex flex-col items-center justify-center gap-4 overflow-y-scroll pb-24 md:grid md:grid-cols-3 md:pt-16"
 	>
-		<!-- Welcome Card -->
-		<div
-			class="w-full max-w-sm rounded-lg border border-gray-200 bg-white shadow dark:border-gray-700 dark:bg-gray-800"
-		>
+		<!-- Existing Welcome Card, Alert, Quotes, and Navigation Buttons -->
+		<div class="w-full max-w-sm rounded-lg bg-white shadow dark:border-gray-700 dark:bg-gray-800">
 			<div class="flex flex-col items-center pb-10 pt-10">
 				<!-- svelte-ignore a11y-img-redundant-alt -->
-				<img class="mb-3 h-24 w-24 rounded-full shadow-lg" src={svg} alt="Profile image" />
+				<img
+					class="mb-3 h-24 w-24 rounded-full shadow-lg"
+					src={avatar(user.uid)}
+					alt="Profile image"
+				/>
 				<h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{user.displayName}</h5>
-				<span class="text-sm text-gray-500 dark:text-gray-400">{greeting}!</span>
+				<span class="text-sm text-gray-400">{greeting}!</span>
 				<div class="mt-4 flex md:mt-6">
-					<a
+					<Button
+						color="light"
 						href="/profile"
-						class="ms-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
-						>Profile</a
+						class="rounded-lgpx-4 ms-2 py-2 text-sm font-medium text-gray-900 backdrop-blur-md hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
+						>Profile</Button
 					>
 				</div>
 			</div>
 		</div>
 
-		<Alert>
-			<InfoCircleSolid slot="icon" class="h-4 w-4" />
-			<span class="font-medium">Attention!</span>
-			Please complete the on-boarding process for us to better understand you.
-			<a href="/on-boarding" class="font-bold underline">Click Here</a>
-		</Alert>
-
-		<div
-			class="w-full max-w-sm rounded-lg border border-gray-200 bg-white shadow dark:border-gray-700 dark:bg-gray-800"
-		>
-			<figure
-				class="flex flex-col items-center justify-center rounded-t-lg border-b border-gray-200 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800 md:rounded-t-none md:rounded-tl-lg md:border-e"
-			>
-				<blockquote class="mx-auto mb-4 max-w-2xl text-gray-500 dark:text-gray-400">
-					<p class="my-4 font-light">"{quote.QUOTE}"</p>
-				</blockquote>
-				<div class="space-y-0.5 text-left font-medium dark:text-white">
-					<div>- {quote.AUTHOR} -</div>
+		<!-- Chats Section, showing all distinct chats -->
+		{#each data.data as prescription}
+			<div class="flex w-full flex-col gap-4 rounded-lg p-4 shadow-sm backdrop-blur-md">
+				<div class="flex w-full flex-row items-center justify-between gap-4">
+					<!-- svelte-ignore a11y-img-redundant-alt -->
+					<!-- <img class="h-8 w-8 rounded-full backdrop-blur-md" src={avatar(chat.chatuid)} alt="User image" /> -->
+					<h2 class="text-wrap text-xs font-semibold">Medication Info</h2>
 				</div>
-			</figure>
-		</div>
-
-		<!-- Other Sections buttons 2x2 -->
-		<div
-			class="w-full max-w-sm rounded-lg border border-gray-200 bg-white shadow dark:border-gray-700 dark:bg-gray-800"
-		>
-			<h2 class="p-4 text-center text-xl font-medium text-gray-900 dark:text-white">
-				We got your back!
-			</h2>
-			<div class="grid grid-cols-2 gap-4 p-4">
-				<Button href="/journal">
-					Journal <ArrowRightOutline class="ms-2 h-3.5 w-3.5" />
-				</Button>
-				<Button href="/speeches">
-					Speeches <ArrowRightOutline class="ms-2 h-3.5 w-3.5" />
-				</Button>
-				<Button href="/status">
-					Status Update <ArrowRightOutline class="ms-2 h-3.5 w-3.5" />
-				</Button>
-				<Button href="/gethelp">
-					Get Help <ArrowRightOutline class="ms-2 h-3.5 w-3.5" />
-				</Button>
-				<Button href="/groupchat">
-					Group Chat <ArrowRightOutline class="ms-2 h-3.5 w-3.5" />
-				</Button>
+				<div class="flex w-full flex-row items-center justify-between gap-4">
+					<div>
+						<p class="text-white">{prescription.city}</p>
+						<p class="text-white">{prescription.text}</p>
+					</div>
+					<button
+						on:click={() => accept(prescription.id, prescription.uid, user.uid)}
+						class="mt-2 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+					>
+						Accept
+					</button>
+				</div>
 			</div>
-		</div>
+		{/each}
+		{#if data.data.length === 0}
+			<p>No prescriptions available at the moment.</p>
+		{/if}
 	</div>
 </SignedIn>

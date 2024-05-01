@@ -170,18 +170,18 @@
 			<slot />
 		</div>
 
-		<BottomNav position="fixed" classInner="grid-cols-4">
+		<BottomNav position="fixed" classInner="grid-cols-3">
 			<SignedIn let:signOut>
 				<BottomNavItem btnName="Home" href="/">
 					<HomeSolid
-						class="mb-1 h-5 w-5 text-gray-500 group-hover:text-primary-600 dark:text-gray-400 dark:group-hover:text-primary-500"
+						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-400"
 					/>
 				</BottomNavItem>
-				<BottomNavItem btnName="Journal" href="/journal">
+				<!-- <BottomNavItem btnName="Journal" href="/journal">
 					<WalletSolid
 						class="mb-1 h-5 w-5 text-gray-500 group-hover:text-primary-600 dark:text-gray-400 dark:group-hover:text-primary-500"
 					/>
-				</BottomNavItem>
+				</BottomNavItem> -->
 				<!-- <BottomNavItem btnName="Speeches" href="/speeches">
 				<LandmarkSolid
 					class="mb-1 h-5 w-5 text-gray-500 group-hover:text-primary-600 dark:text-gray-400 dark:group-hover:text-primary-500"
@@ -190,34 +190,34 @@
 
 				<BottomNavItem btnName="Profile" href="/profile">
 					<UserCircleSolid
-						class="mb-1 h-5 w-5 text-gray-500 group-hover:text-primary-600 dark:text-gray-400 dark:group-hover:text-primary-500"
+						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-400"
 					/>
 				</BottomNavItem>
 				<BottomNavItem btnName="Log Out" on:click={signOut}>
 					<ArrowRightToBracketOutline
-						class="mb-1 h-5 w-5 text-gray-500 group-hover:text-primary-600 dark:text-gray-400 dark:group-hover:text-primary-500"
+						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-400"
 					/>
 				</BottomNavItem>
 			</SignedIn>
 			<SignedOut>
 				<BottomNavItem btnName="Home" href="/">
 					<HomeSolid
-						class="mb-1 h-5 w-5 text-gray-500 group-hover:text-primary-600 dark:text-gray-400 dark:group-hover:text-primary-500"
+						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-400"
 					/>
 				</BottomNavItem>
 				<BottomNavItem btnName="Speeches" href="/speeches">
 					<LandmarkSolid
-						class="mb-1 h-5 w-5 text-gray-500 group-hover:text-primary-600 dark:text-gray-400 dark:group-hover:text-primary-500"
+						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-400"
 					/>
 				</BottomNavItem>
 				<BottomNavItem btnName="Log In" href="/login">
 					<ArrowLeftToBracketSolid
-						class="mb-1 h-5 w-5 text-gray-500 group-hover:text-primary-600 dark:text-gray-400 dark:group-hover:text-primary-500"
+						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-400"
 					/>
 				</BottomNavItem>
 				<BottomNavItem btnName="Sign Up" href="/signup">
 					<UserEditSolid
-						class="mb-1 h-5 w-5 text-gray-500 group-hover:text-primary-600 dark:text-gray-400 dark:group-hover:text-primary-500"
+						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-400"
 					/>
 				</BottomNavItem>
 			</SignedOut>
@@ -248,7 +248,7 @@
 										class="flex flex-col space-y-6"
 										action="/"
 									>
-										<h3 class="p-0 text-xl font-medium text-gray-900 dark:text-white">Log In</h3>
+										<h3 class="p-0 text-xl font-medium text-gray-900 dark:text-gray-400">Log In</h3>
 										{#if error.status}
 											<Alert color="red">
 												<span class="font-medium">{error.title}</span>
@@ -285,7 +285,7 @@
 										</div>
 										<Button type="submit" class="w-full1">Sign in</Button>
 										<!-- svelte-ignore a11y-no-static-element-interactions -->
-										<p class="text-sm font-light text-gray-500 dark:text-gray-400">
+										<p class="text-sm font-light text-gray-400">
 											<!-- svelte-ignore a11y-click-events-have-key-events -->
 											<!-- svelte-ignore a11y-no-static-element-interactions -->
 											<!-- svelte-ignore a11y-missing-attribute -->
@@ -294,7 +294,7 @@
 												on:click={() => {
 													login = false;
 												}}
-												class="font-medium text-primary-600 hover:underline dark:text-primary-500"
+												class="text-primary-600 dark:text-primary-500 font-medium hover:underline"
 												>Sign up</a
 											>
 										</p>
@@ -324,7 +324,9 @@
 										class="flex flex-col space-y-6"
 										action="/"
 									>
-										<h3 class="p-0 text-xl font-medium text-gray-900 dark:text-white">Sign Up</h3>
+										<h3 class="p-0 text-xl font-medium text-gray-900 dark:text-gray-400">
+											Sign Up
+										</h3>
 										{#if error.status}
 											<Alert color="red">
 												<span class="font-medium">{error2.title}</span>
@@ -372,7 +374,7 @@
 											/>
 										</Label>
 										<Button type="submit" class="w-full1">Sign Up</Button>
-										<p class="text-sm font-light text-gray-500 dark:text-gray-400">
+										<p class="text-sm font-light text-gray-400">
 											<!-- svelte-ignore a11y-no-static-element-interactions -->
 											<!-- svelte-ignore a11y-missing-attribute -->
 											<!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -381,7 +383,7 @@
 												on:click={() => {
 													login = true;
 												}}
-												class="font-medium text-primary-600 hover:underline dark:text-primary-500"
+												class="text-primary-600 dark:text-primary-500 font-medium hover:underline"
 												>Log in</a
 											>
 										</p>

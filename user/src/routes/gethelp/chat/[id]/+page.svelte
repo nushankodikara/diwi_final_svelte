@@ -13,20 +13,18 @@
 		orderBy,
 		query,
 		serverTimestamp,
-
 		where
-
 	} from 'firebase/firestore';
 	import { onMount } from 'svelte';
 
-	const avatar = (uid:string)=>{
+	const avatar = (uid: string) => {
 		const av = createAvatar(identicon, { seed: uid, backgroundType: ['solid'] });
 		return av.toDataUriSync();
-	}
+	};
 
 	let message = '';
 
-    export let data;
+	export let data;
 
 	const db = getFirestore(app);
 
@@ -37,15 +35,23 @@
 			text: message,
 			createdAt: serverTimestamp(),
 			chatuid: user.uid,
-            uid: user.uid
+			uid: user.uid
 		});
 		message = '';
 	};
-
 </script>
 
 <SignedIn let:user>
-	<Collection ref={query(collection(db, `/counselor/${data.props.id}/chats`), where('chatuid','==',user.uid), orderBy('createdAt', 'asc'), limit(40))} let:data let:count>
+	<Collection
+		ref={query(
+			collection(db, `/counselor/${data.props.id}/chats`),
+			where('chatuid', '==', user.uid),
+			orderBy('createdAt', 'asc'),
+			limit(40)
+		)}
+		let:data
+		let:count
+	>
 		<div class="flex flex-col gap-4 overflow-y-auto pb-36 pl-2 pr-4 pt-4">
 			{#each data as post}
 				<div class={`flex w-full ${post.uid === user.uid ? 'justify-end' : 'justify-start'}`}>
@@ -53,7 +59,11 @@
 						class={`flex items-center gap-2.5 ${post.uid === user.uid ? 'flex-row-reverse' : 'flex-row'}`}
 					>
 						<!-- svelte-ignore a11y-img-redundant-alt -->
-						<img class="h-8 w-8 rounded-full bg-white" src={avatar(post.uid)} alt="User image" />
+						<img
+							class="h-8 w-8 rounded-full backdrop-blur-md"
+							src={avatar(post.uid)}
+							alt="User image"
+						/>
 						<div
 							class={`leading-1.5 flex max-w-[320px] flex-col ${post.uid === user.uid ? 'items-end bg-blue-100' : 'items-start bg-gray-100'} rounded-xl p-2`}
 						>
@@ -67,7 +77,7 @@
 		</div>
 	</Collection>
 
-	<div class="fixed bottom-0 left-0 right-0 mb-16 flex flex-row gap-4 bg-white p-4">
+	<div class="fixed bottom-0 left-0 right-0 mb-16 flex flex-row gap-4 p-4 backdrop-blur-md">
 		<Input type="text" placeholder="Type your message here..." bind:value={message} />
 		<Button on:click={() => sendMessage(user)}>Send</Button>
 	</div>

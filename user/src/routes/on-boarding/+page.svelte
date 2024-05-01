@@ -113,7 +113,7 @@
 					<h3 class="text-xl font-medium text-gray-900 dark:text-white">Onboarding</h3>
 					<Label class="space-y-2">
 						<span>On a scale of 1-10, how would you rate the severity of your symptoms?</span>
-						<span class="text-xs text-gray-500 dark:text-gray-400"
+						<span class="text-xs text-white"
 							>1 being the least severe and 10 being the most severe</span
 						>
 						<br />

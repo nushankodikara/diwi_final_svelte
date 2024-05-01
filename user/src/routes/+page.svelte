@@ -46,9 +46,7 @@
 		class="flex flex-col items-center justify-center gap-4 overflow-y-scroll pb-24 md:grid md:grid-cols-3 md:pt-16"
 	>
 		<!-- Welcome Card -->
-		<div
-			class="w-full max-w-sm rounded-lg border border-gray-200 bg-white shadow dark:border-gray-700 dark:bg-gray-800"
-		>
+		<div class="w-full max-w-sm rounded-lg bg-white shadow dark:border-gray-700 dark:bg-gray-800">
 			<div class="flex flex-col items-center pb-10 pt-10">
 				<!-- svelte-ignore a11y-img-redundant-alt -->
 				<img
@@ -57,18 +55,19 @@
 					alt="Profile image"
 				/>
 				<h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{user.displayName}</h5>
-				<span class="text-sm text-gray-500 dark:text-gray-400">{greeting}!</span>
+				<span class="text-sm text-gray-400">{greeting}!</span>
 				<div class="mt-4 flex md:mt-6">
-					<a
+					<Button
+						color="light"
 						href="/profile"
-						class="ms-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
-						>Profile</a
+						class="rounded-lgpx-4 ms-2 py-2 text-sm font-medium text-gray-900 backdrop-blur-md hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
+						>Profile</Button
 					>
 				</div>
 			</div>
 		</div>
 
-		<span class="hidden md:block"> {checkOnboarding(user)}</span>
+		<span class="hidden"> {checkOnboarding(user)}</span>
 		{#if !onBoarding}
 			<Alert>
 				<InfoCircleSolid slot="icon" class="h-4 w-4" />
@@ -79,12 +78,12 @@
 		{/if}
 
 		<div
-			class="w-full max-w-sm rounded-lg border border-gray-200 bg-white shadow dark:border-gray-700 dark:bg-gray-800"
+			class="w-full max-w-sm rounded-lg shadow backdrop-blur-md dark:border-gray-700 dark:bg-gray-800"
 		>
 			<figure
-				class="flex flex-col items-center justify-center rounded-t-lg border-b border-gray-200 bg-white p-8 text-center md:rounded-t-none md:rounded-tl-lg md:border-e dark:border-gray-700 dark:bg-gray-800"
+				class="flex flex-col items-center justify-center rounded-t-lg p-8 text-center backdrop-blur-md md:rounded-t-none md:rounded-tl-lg md:border-e dark:border-gray-700 dark:bg-gray-800"
 			>
-				<blockquote class="mx-auto mb-4 max-w-2xl text-gray-500 dark:text-gray-400">
+				<blockquote class="mx-auto mb-4 max-w-2xl text-white dark:text-white">
 					<p class="my-4 font-light">"{quote.QUOTE}"</p>
 				</blockquote>
 				<div class="space-y-0.5 text-left font-medium dark:text-white">
@@ -95,7 +94,7 @@
 
 		<!-- Other Sections buttons 2x2 -->
 		<div
-			class="w-full max-w-sm rounded-lg border border-gray-200 bg-white shadow dark:border-gray-700 dark:bg-gray-800"
+			class="w-full max-w-sm rounded-lg shadow backdrop-blur-md dark:border-gray-700 dark:bg-gray-800"
 		>
 			<h2 class="p-4 text-center text-xl font-medium text-gray-900 dark:text-white">
 				We got your back!
@@ -115,6 +114,9 @@
 				</Button>
 				<Button href="/groupchat">
 					Group Chat <ArrowRightOutline class="ms-2 h-3.5 w-3.5" />
+				</Button>
+				<Button href={`/prescriptions/${user.uid}`}>
+					Prescriptions <ArrowRightOutline class="ms-2 h-3.5 w-3.5" />
 				</Button>
 			</div>
 		</div>

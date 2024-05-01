@@ -174,12 +174,12 @@
 			<SignedIn let:signOut>
 				<BottomNavItem btnName="Home" href="/">
 					<HomeSolid
-						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-500 dark:text-gray-400"
+						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-400"
 					/>
 				</BottomNavItem>
 				<BottomNavItem btnName="Journal" href="/journal">
 					<WalletSolid
-						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-500 dark:text-gray-400"
+						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-400"
 					/>
 				</BottomNavItem>
 				<!-- <BottomNavItem btnName="Speeches" href="/speeches">
@@ -190,34 +190,34 @@
 
 				<BottomNavItem btnName="Profile" href="/profile">
 					<UserCircleSolid
-						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-500 dark:text-gray-400"
+						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-400"
 					/>
 				</BottomNavItem>
 				<BottomNavItem btnName="Log Out" on:click={signOut}>
 					<ArrowRightToBracketOutline
-						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-500 dark:text-gray-400"
+						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-400"
 					/>
 				</BottomNavItem>
 			</SignedIn>
 			<SignedOut>
 				<BottomNavItem btnName="Home" href="/">
 					<HomeSolid
-						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-500 dark:text-gray-400"
+						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-400"
 					/>
 				</BottomNavItem>
 				<BottomNavItem btnName="Speeches" href="/speeches">
 					<LandmarkSolid
-						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-500 dark:text-gray-400"
+						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-400"
 					/>
 				</BottomNavItem>
 				<BottomNavItem btnName="Log In" href="/login">
 					<ArrowLeftToBracketOutline
-						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-500 dark:text-gray-400"
+						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-400"
 					/>
 				</BottomNavItem>
 				<BottomNavItem btnName="Sign Up" href="/signup">
 					<UserEditSolid
-						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-500 dark:text-gray-400"
+						class="group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-5 w-5 text-gray-400"
 					/>
 				</BottomNavItem>
 			</SignedOut>
@@ -285,7 +285,7 @@
 										</div>
 										<Button type="submit" class="w-full1">Sign in</Button>
 										<!-- svelte-ignore a11y-no-static-element-interactions -->
-										<p class="text-sm font-light text-gray-500 dark:text-gray-400">
+										<p class="text-sm font-light text-gray-400">
 											<!-- svelte-ignore a11y-click-events-have-key-events -->
 											<!-- svelte-ignore a11y-no-static-element-interactions -->
 											<!-- svelte-ignore a11y-missing-attribute -->
@@ -372,7 +372,7 @@
 											/>
 										</Label>
 										<Button type="submit" class="w-full1">Sign Up</Button>
-										<p class="text-sm font-light text-gray-500 dark:text-gray-400">
+										<p class="text-sm font-light text-gray-400">
 											<!-- svelte-ignore a11y-no-static-element-interactions -->
 											<!-- svelte-ignore a11y-missing-attribute -->
 											<!-- svelte-ignore a11y-click-events-have-key-events -->
